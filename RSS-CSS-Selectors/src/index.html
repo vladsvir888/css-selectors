@@ -4,9 +4,111 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>RSS-CSS-Selectors</title>
+        <title>CSS-Selectors</title>
+        <link rel="icon" href="assets/favicon.svg"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     </head>
     <body>
-        <script src="./index.js"></script>
+        <div class="app">
+            <header class="header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="30" height="30">
+                    <path d="M48.2 66.8c-.1-.8-.2-1.7-.2-2.5c0-.1 0-.1 0-.2c0-8.8 7.2-16 16-16c.9 0 1.9 .1 2.8 .2C74.3 49.5 80 56.1 80 64c0 8.8-7.2 16-16 16c-7.9 0-14.5-5.7-15.8-13.2zM0 64c0 26.9 16.5 49.9 40 59.3V228.7C16.5 238.1 0 261.1 0 288c0 35.3 28.7 64 64 64c26.9 0 49.9-16.5 59.3-40H324.7c9.5 23.5 32.5 40 59.3 40c35.3 0 64-28.7 64-64c0-26.9-16.5-49.9-40-59.3V123.3c23.5-9.5 40-32.5 40-59.3c0-35.3-28.7-64-64-64c-26.9 0-49.9 16.5-59.3 40H123.3C113.9 16.5 90.9 0 64 0C28.7 0 0 28.7 0 64zm368 0a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM324.7 88c6.5 16 19.3 28.9 35.3 35.3V228.7c-16 6.5-28.9 19.3-35.3 35.3H123.3c-6.5-16-19.3-28.9-35.3-35.3V123.3c16-6.5 28.9-19.3 35.3-35.3H324.7zM384 272a16 16 0 1 1 0 32 16 16 0 1 1 0-32zM80 288c0 7.9-5.7 14.5-13.2 15.8c-.8 .1-1.7 .2-2.5 .2l-.2 0c-8.8 0-16-7.2-16-16c0-.9 .1-1.9 .2-2.8C49.5 277.7 56.1 272 64 272c8.8 0 16 7.2 16 16zm391.3-40h45.4c6.5 16 19.3 28.9 35.3 35.3V388.7c-16 6.5-28.9 19.3-35.3 35.3H315.3c-6.5-16-19.3-28.9-35.3-35.3V352H232v36.7c-23.5 9.5-40 32.5-40 59.3c0 35.3 28.7 64 64 64c26.9 0 49.9-16.5 59.3-40H516.7c9.5 23.5 32.5 40 59.3 40c35.3 0 64-28.7 64-64c0-26.9-16.5-49.9-40-59.3V283.3c23.5-9.5 40-32.5 40-59.3c0-35.3-28.7-64-64-64c-26.9 0-49.9 16.5-59.3 40H448v16.4c9.8 8.8 17.8 19.5 23.3 31.6zm88.9-26.7a16 16 0 1 1 31.5 5.5 16 16 0 1 1 -31.5-5.5zM271.8 450.7a16 16 0 1 1 -31.5-5.5 16 16 0 1 1 31.5 5.5zm301.5 13c-7.5-1.3-13.2-7.9-13.2-15.8c0-8.8 7.2-16 16-16c7.9 0 14.5 5.7 15.8 13.2l0 .1c.1 .9 .2 1.8 .2 2.7c0 8.8-7.2 16-16 16c-.9 0-1.9-.1-2.8-.2z"/>
+                </svg>
+                CSS-Selectors
+            </header>
+            <main class="main">
+                <h1>Select animated elements</h1>
+                <div class="table">
+                    <div class="table__wrap"></div>
+                    <div class="table__edge"></div>
+                </div>
+                <div class="main__wrap">
+                    <div class="code-block"></div>
+                </div>
+            </main>
+            <aside class="sidebar">
+                <div class="sidebar__text">
+                    Level <span>1</span> of 10
+                </div>
+                <button class="btn sidebar__btn sidebar__btn--prev" title="Previous level" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="30" height="30">
+                        <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+                    </svg>
+                </button>
+                <button class="btn sidebar__btn sidebar__btn--next" title="Next level">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="30" height="30">
+                        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+                    </svg>
+                </button>
+                <ul class="sidebar__levels">
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn" disabled>
+                            Level 1
+                        </button>
+                        <div class="sidebar__level-descr">
+                            <p>
+                                Type Selector
+                            </p>
+                            <p>
+                                Select elements by their type
+                            </p>
+                        </div>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 2
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 3
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 4
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 5
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 6
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 7
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 8
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 9
+                        </button>
+                    </li>
+                    <li class="sidebar__level">
+                        <button class="btn sidebar__level-btn">
+                            Level 10
+                        </button>
+                    </li>
+                </ul>
+                <button class="btn sidebar__reset">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30">
+                        <path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"/>
+                    </svg>
+                    Reset progress
+                </button>
+            </aside>
+        </div>
     </body>
 </html>
