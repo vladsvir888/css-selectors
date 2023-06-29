@@ -4,6 +4,8 @@ import loadLevel from './loadLevel';
 function resetProgress() {
     const resetButton = document.querySelector('.sidebar__reset');
 
+    if (!resetButton) return;
+
     resetButton.addEventListener('click', () => {
         if (data.currentLevel === 0) return;
 

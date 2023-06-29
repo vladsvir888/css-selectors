@@ -2,14 +2,26 @@ export default {
     currentLevel: 0,
     levels: [
         {
-            title: 'Title',
-            selectorName: 'Selector',
-            selectorDescription: 'Description of selector',
+            title: 'Select the plate',
+            selectorName: 'X',
+            selectorDescription: 'Select elements by their type',
+            markup: `
+                <plate>
+                </plate>
+            `,
+            answer: 'plate',
         },
         {
-            title: 'Title 2',
-            selectorName: 'Selector 2',
-            selectorDescription: 'Description of selector',
+            title: 'Select the plates',
+            selectorName: 'X',
+            selectorDescription: 'Select elements by their type',
+            markup: `
+                <plate>
+                </plate>
+                <plate>
+                </plate>
+            `,
+            answer: 'plate',
         },
         {
             title: 'Title 3',
@@ -52,5 +64,5 @@ export default {
             selectorDescription: 'Description of selector',
         },
     ],
-    keyLS: 'current_level_css_selector_game',
+    keyLocalStorage: 'current_level_css_selector_game',
 };

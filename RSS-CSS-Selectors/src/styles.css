@@ -43,6 +43,7 @@ svg {
     width: 30px;
     height: 30px;
     fill: currentColor;
+    pointer-events: none;
 }
 
 @media (hover: hover) {
@@ -155,15 +156,10 @@ h1 {
     font-weight: 700;
 }
 
+/* main */
 .main {
     grid-area: main;
     padding: 20px;
-}
-
-.main__wrap {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    border-radius: 4px;
 }
 
 /* table */
@@ -213,7 +209,59 @@ h1 {
     right: 20px;
 }
 
-.table__plate {
+/* code-block */
+.code-block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+.code-block__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #e8e8e8;
+}
+
+.code-block__footer {
+    display: flex;
+}
+
+.code-block__line {
+    padding: 10px;
+    background-color: #e8e8e8;
+}
+
+.code-block__line-num {
+    display: block;
+}
+
+.code-block__area {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.code-block__area-wrap {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.code-block__input {
+    border: none;
+    padding: 0;
+    width: 100%;
+    outline: none;
+}
+
+.code-block__btn {
+    color: #f50;
+    font-weight: 600;
+}
+
+.table plate {
     position: relative;
     display: flex;
     justify-content: center;
@@ -226,7 +274,7 @@ h1 {
     border-radius: 10px;
 }
 
-.table__plate::before {
+.table plate::before {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -238,8 +286,60 @@ h1 {
     content: "";
 }
 
-.animate-pulse {
-    animation: pulse 1s infinite;
+.table .code-hover {
+    outline: 3px solid #f50;
+}
+
+.table plate:hover {
+    outline: 3px solid #f50;
+}
+
+.code-block__area--html > * {
+    padding-left: 30px;
+}
+
+.code-block__area--html plate {
+    display: block;
+}
+
+.code-block__area--html * > * {
+    padding-left: 30px;
+}
+
+.code-block__area--html::before {
+    content: '<div class="table">';
+}
+
+.code-block__area--html::after {
+    content: '</div>';
+}
+
+.code-block__area--html :is(plate)::before {
+    display: block;
+}
+
+.code-block__area--html plate:empty::before {
+    content: '<plate>';
+}
+
+.code-block__area--html plate:not(:empty)::before {
+    content: '<plate>';
+}
+
+.code-block__area--html plate:not(:empty)::after {
+    content: '</plate>';
+}
+
+.code-block__area--html .table-hover {
+    color: #f50;
+}
+
+.code-block__area--html plate:hover {
+    color: #f50;
+}
+
+.table .animate-pulse {
+    animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
@@ -253,5 +353,31 @@ h1 {
 
     to {
         transform: scale(1);
+    }
+}
+
+.animate-shake {
+    animation: shake 0.5s linear;
+}
+
+@keyframes shake {
+    from,
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translate3d(0, -10px, 0);
+    }
+  
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translate3d(0, 10px, 0);
     }
 }

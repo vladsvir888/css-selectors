@@ -1,8 +1,9 @@
 import data from '../data';
-import loadLevel from './loadLevel';
 
 function createLevelMenu() {
-    const levelsWrapperNode = document.querySelector('.sidebar__levels');
+    const levelsWrapper = document.querySelector('.sidebar__levels');
+
+    if (!levelsWrapper) return;
 
     const { levels, currentLevel } = data;
 
@@ -18,17 +19,7 @@ function createLevelMenu() {
         })
         .join('');
 
-    levelsWrapperNode.insertAdjacentHTML('afterbegin', result);
-
-    const levelButtons = levelsWrapperNode.querySelectorAll('.sidebar__level-btn');
-
-    levelButtons.forEach((levelButton, index) => {
-        levelButton.addEventListener('click', () => {
-            data.currentLevel = index;
-
-            loadLevel();
-        });
-    });
+    levelsWrapper.insertAdjacentHTML('afterbegin', result);
 }
 
 export default createLevelMenu;
