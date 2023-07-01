@@ -1,4 +1,4 @@
-import data from '../data';
+import dataGame from '../dataGame';
 import loadLevel from './loadLevel';
 
 function toggleLevel() {
@@ -7,10 +7,9 @@ function toggleLevel() {
 
         if (target.classList.contains('sidebar__level-btn')) {
             const buttons = [...document.querySelectorAll('.sidebar__level-btn')];
-
             const index = buttons.indexOf(target);
 
-            data.currentLevel = index;
+            dataGame.currentLevel = index;
 
             loadLevel();
 
@@ -19,9 +18,9 @@ function toggleLevel() {
 
         if (target.classList.contains('sidebar__btn')) {
             if (target.classList.contains('sidebar__btn--next')) {
-                data.currentLevel += 1;
+                dataGame.currentLevel += 1;
             } else {
-                data.currentLevel -= 1;
+                dataGame.currentLevel -= 1;
             }
 
             loadLevel();

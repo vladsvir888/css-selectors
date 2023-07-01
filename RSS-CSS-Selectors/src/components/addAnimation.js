@@ -1,8 +1,10 @@
-function addAnimation(node) {
-    node.classList.add('animate-shake');
+function addAnimation(nodes, animateClass) {
+    nodes.forEach((node) => {
+        node.classList.add(animateClass);
 
-    node.addEventListener('animationend', () => {
-        node.classList.remove('animate-shake');
+        node.addEventListener('animationend', () => {
+            node.classList.remove(animateClass);
+        });
     });
 }
 

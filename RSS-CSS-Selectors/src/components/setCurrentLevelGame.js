@@ -1,7 +1,9 @@
-import data from '../data';
+import dataGame from '../dataGame';
 
 function setCurrentLevelGame() {
-    data.currentLevel = Number(localStorage.getItem(data.keyLocalStorage));
+    const currentLevel = JSON.parse(localStorage.getItem(dataGame.keyLocalStorageCurrentLevel));
+
+    if (currentLevel) dataGame.currentLevel = currentLevel;
 }
 
 export default setCurrentLevelGame;

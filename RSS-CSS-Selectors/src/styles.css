@@ -30,6 +30,12 @@ button {
     font: inherit;
 }
 
+.pe-none {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
 .btn {
     padding: 0;
     border: none;
@@ -58,10 +64,14 @@ body {
 }
 
 h1 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
     font-size: 45px;
     font-weight: 400;
+}
+
+i {
+    color: #008a1e;
 }
 
 .app {
@@ -69,7 +79,8 @@ h1 {
     grid-template-columns: 1fr 375px;
     grid-template-areas: 
         'header sidebar'
-        'main sidebar';
+        'main sidebar'
+        'footer sidebar';
     grid-template-rows: min-content 1fr;
     height: 100vh;
     max-width: 1920px;
@@ -81,10 +92,21 @@ h1 {
     align-items: center;
     column-gap: 10px;
     grid-area: header;
-    padding: 20px;
+    padding: 10px;
 }
 
-/* sidebar */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.footer__link {
+    display: flex;
+    color: #393939;
+}
+
 .sidebar {
     display: grid;
     grid-template-columns: 1fr repeat(2, max-content);
@@ -108,7 +130,7 @@ h1 {
     display: flex;
 }
 
-.sidebar__btn[disabled] {
+.sidebar__btn:disabled {
     opacity: 0.5;
     cursor: default;
 }
@@ -132,7 +154,17 @@ h1 {
     font-size: 25px;
 }
 
-.sidebar__level-btn[disabled] {
+.sidebar__level-btn.with-help::before {
+    content: '\2713';
+    color: #b30000;
+}
+
+.sidebar__level-btn.success::before {
+    content: '\2713';
+    color: #008a1e;
+}
+
+.sidebar__level-btn:disabled {
     color: #f50;
     cursor: default;
 }
@@ -156,16 +188,14 @@ h1 {
     font-weight: 700;
 }
 
-/* main */
 .main {
     grid-area: main;
-    padding: 20px;
+    padding: 10px;
 }
 
-/* table */
 .table {
     max-width: 600px;
-    margin: 0 auto 50px;
+    margin: 0 auto 30px;
     perspective: 400px;
 }
 
@@ -209,7 +239,6 @@ h1 {
     right: 20px;
 }
 
-/* code-block */
 .code-block {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -239,6 +268,7 @@ h1 {
 }
 
 .code-block__area {
+    position: relative;
     padding: 10px;
     flex-grow: 1;
 }
@@ -256,12 +286,18 @@ h1 {
     outline: none;
 }
 
-.code-block__btn {
-    color: #f50;
+.code-block__btn, 
+.code-block__help-btn {
     font-weight: 600;
 }
 
-.table plate {
+.code-block__btns {
+    display: flex;
+    column-gap: 10px;
+}
+
+/* фигуры */
+.table square {
     position: relative;
     display: flex;
     justify-content: center;
@@ -269,43 +305,67 @@ h1 {
     width: 120px;
     height: 120px;
     background-color: #fff;
-    box-shadow: 0px 8px 0px rgba(0, 0, 0, 0.1);
-    border-bottom: 5px solid #ddd;
-    border-radius: 10px;
 }
 
-.table plate::before {
+.table triangle {
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.table triangle.some-class {
+    background-color: #393939;
+}
+
+.table square triangle {
+    background-color: #393939;
+}
+
+.table square .first {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    border: 4px solid #ccc;
-    opacity: 0.15;
-    content: "";
+    z-index: 1;
+    top: -20px;
 }
+/* фигуры */
 
+/* ховер фигур на столе */
 .table .code-hover {
     outline: 3px solid #f50;
 }
 
-.table plate:hover {
+.table triangle.code-hover {
+    background-color: #f50;
+}
+
+.table square:hover {
     outline: 3px solid #f50;
 }
 
-.code-block__area--html > * {
-    padding-left: 30px;
+.table triangle:hover {
+    background-color: #f50;
 }
 
-.code-block__area--html plate {
+.table square:has(triangle:hover) {
+    outline: none;
+}
+/* ховер фигур на столе */
+
+.code-block__area--html :is(square, triangle) {
     display: block;
+}
+
+/* отступы */
+.code-block__area--html > * {
+    padding-left: 30px;
 }
 
 .code-block__area--html * > * {
     padding-left: 30px;
 }
+/* отступы */
 
+/* элемент-контейнер */
 .code-block__area--html::before {
     content: '<div class="table">';
 }
@@ -313,42 +373,100 @@ h1 {
 .code-block__area--html::after {
     content: '</div>';
 }
+/* элемент-контейнер */
 
-.code-block__area--html :is(plate)::before {
+.code-block__area--html :is(square, triangle) {
+    color: #b30000;
+}
+
+.code-block__area--html::before,
+.code-block__area--html::after {
+    color: #a76201;
+}
+
+.code-block__area--html :is(square, triangle)::before {
     display: block;
 }
 
-.code-block__area--html plate:empty::before {
-    content: '<plate>';
+/* квадрат */
+.code-block__area--html square:not(:empty)::before {
+    content: '<square>';
 }
 
-.code-block__area--html plate:not(:empty)::before {
-    content: '<plate>';
+.code-block__area--html square:not(:empty)::after {
+    content: '</square>';
+}
+/* квадрат */
+
+/* треугольник */
+.code-block__area--html triangle:not(:empty)::before {
+    content: '<triangle>';
 }
 
-.code-block__area--html plate:not(:empty)::after {
-    content: '</plate>';
+.code-block__area--html triangle:not(:empty)::after {
+    content: '</triangle>';
 }
+/* треугольник */
+
+/* треугольник с классом */
+.code-block__area--html triangle.some-class:not(:empty)::before {
+    content: '<triangle class="some-class">';
+}
+
+.code-block__area--html triangle.some-class:not(:empty)::after {
+    content: '</triangle>';
+}
+/* треугольник с классом */
+
+/* треугольник с id */
+.code-block__area--html triangle#some-id:not(:empty)::before {
+    content: '<triangle id="some-id">';
+}
+
+.code-block__area--html triangle#some-id:not(:empty)::after {
+    content: '</triangle>';
+}
+/* треугольник с id */
 
 .code-block__area--html .table-hover {
     color: #f50;
 }
 
-.code-block__area--html plate:hover {
+.code-block__area--html :is(square, triangle):hover {
     color: #f50;
+}
+
+.code-block__area--html square:has(triangle:hover) {
+    color: #b30000;
 }
 
 .table .animate-pulse {
     animation: pulse 1.5s infinite;
 }
 
+.table .animate-fadeout {
+    animation: fadeOut 0.5s linear;
+}
+
+.typing-text {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing-text 2s steps(50, end);
+}
+  
+@keyframes typing-text {
+    from { 
+        width: 0; 
+    }
+}
+  
 @keyframes pulse {
     from {
         transform: scale(1);
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
 
     to {
@@ -379,5 +497,37 @@ h1 {
     60%,
     80% {
       transform: translate3d(0, 10px, 0);
+    }
+}
+
+.animate-fadeout {
+    animation: fadeOut 0.5s linear;
+}
+
+@keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+  
+    to {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0);
+    }
+  }
+
+@media (max-width: 992px) {
+    .app {
+        grid-template-areas: 
+            'header'
+            'main'
+            'sidebar'
+            'footer';
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .code-block {
+        grid-template-columns: 1fr;
     }
 }

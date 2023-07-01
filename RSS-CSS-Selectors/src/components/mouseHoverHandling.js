@@ -1,4 +1,4 @@
-import data from '../data';
+import dataGame from '../dataGame';
 
 function mouseHoverHandling() {
     const table = document.querySelector('.table__wrap');
@@ -29,13 +29,11 @@ function mouseHoverHandling() {
     }
 
     function handleCodeAndTableMouseOut() {
-        const { levels, currentLevel } = data;
+        const { levels, currentLevel } = dataGame;
         const currentLevelData = levels[currentLevel];
 
         table.innerHTML = currentLevelData.markup;
         code.innerHTML = currentLevelData.markup;
-
-        table.querySelector(currentLevelData.answer).classList.add('animate-pulse');
     }
 
     table.addEventListener('mouseover', handleTableMouseOver);

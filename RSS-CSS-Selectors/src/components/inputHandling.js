@@ -5,11 +5,9 @@ function inputHandling() {
 
     if (!button) return;
 
-    button.addEventListener('click', () => {
-        const input = button.previousElementSibling;
+    const input = document.querySelector('.code-block__input');
 
-        checkAnswer(input);
-    });
+    button.addEventListener('click', () => checkAnswer(input));
 
     document.addEventListener('keydown', (event) => {
         const { code, target } = event;

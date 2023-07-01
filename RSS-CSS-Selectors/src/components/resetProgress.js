@@ -1,4 +1,4 @@
-import data from '../data';
+import dataGame from '../dataGame';
 import loadLevel from './loadLevel';
 
 function resetProgress() {
@@ -7,9 +7,11 @@ function resetProgress() {
     if (!resetButton) return;
 
     resetButton.addEventListener('click', () => {
-        if (data.currentLevel === 0) return;
+        if (dataGame.currentLevel === 0) return;
 
-        data.currentLevel = 0;
+        dataGame.currentLevel = 0;
+
+        dataGame.historyAnswers = {};
 
         loadLevel();
     });
