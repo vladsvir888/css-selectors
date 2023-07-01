@@ -32,6 +32,8 @@ function mouseHoverHandling() {
         const { levels, currentLevel } = dataGame;
         const currentLevelData = levels[currentLevel];
 
+        if (!currentLevelData) return;
+
         table.innerHTML = currentLevelData.markup;
         code.innerHTML = currentLevelData.markup;
     }
