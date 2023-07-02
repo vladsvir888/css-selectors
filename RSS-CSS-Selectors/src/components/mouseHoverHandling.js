@@ -1,4 +1,4 @@
-import dataGame from '../dataGame';
+import { dataLevels, dataLocalStorage } from '../data';
 
 function mouseHoverHandling() {
     const table = document.querySelector('.table__wrap');
@@ -8,6 +8,8 @@ function mouseHoverHandling() {
         const { target } = event;
 
         if (target === table) return;
+
+        target.dataset.title = target.outerHTML;
 
         target.classList.add('table-hover');
 
@@ -26,11 +28,12 @@ function mouseHoverHandling() {
         const clone = code.cloneNode(true);
 
         table.innerHTML = clone.innerHTML;
+
+        document.querySelector('.table .code-hover').dataset.title = target.outerHTML;
     }
 
     function handleCodeAndTableMouseOut() {
-        const { levels, currentLevel } = dataGame;
-        const currentLevelData = levels[currentLevel];
+        const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
 
         if (!currentLevelData) return;
 

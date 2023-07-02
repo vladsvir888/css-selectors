@@ -1,30 +1,30 @@
-import dataGame from '../dataGame';
+import { dataLocalStorage, keyLocalStorage } from '../data';
 import loadLevel from './loadLevel';
 
 function toggleLevel() {
     document.addEventListener('click', (event) => {
         const { target } = event;
 
+        if (!target.classList.contains('sidebar__level-btn') && !target.classList.contains('sidebar__btn')) return;
+
         if (target.classList.contains('sidebar__level-btn')) {
             const buttons = [...document.querySelectorAll('.sidebar__level-btn')];
             const index = buttons.indexOf(target);
 
-            dataGame.currentLevel = index;
-
-            loadLevel();
-
-            return;
+            dataLocalStorage.currentLevel = index;
         }
 
         if (target.classList.contains('sidebar__btn')) {
             if (target.classList.contains('sidebar__btn--next')) {
-                dataGame.currentLevel += 1;
+                dataLocalStorage.currentLevel += 1;
             } else {
-                dataGame.currentLevel -= 1;
+                dataLocalStorage.currentLevel -= 1;
             }
-
-            loadLevel();
         }
+
+        localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
+
+        loadLevel();
     });
 }
 

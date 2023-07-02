@@ -1,4 +1,4 @@
-import dataGame from '../dataGame';
+import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
 import addAnimation from './addAnimation';
 
 function showHelpText() {
@@ -9,12 +9,16 @@ function showHelpText() {
     const input = document.querySelector('.code-block__input');
 
     button.addEventListener('click', () => {
-        const { levels, currentLevel } = dataGame;
-        const currentLevelData = levels[currentLevel];
+        const { currentLevel, completeLevelsWithHelp } = dataLocalStorage;
+        const currentLevelData = dataLevels[currentLevel];
 
-        dataGame.historyAnswers[dataGame.currentLevel] = {
-            isHelp: true,
-        };
+        if (!completeLevelsWithHelp.includes(currentLevel)) {
+            completeLevelsWithHelp.push(currentLevel);
+        }
+
+        document.querySelector('.sidebar__level-btn[disabled]').classList.add('with-help');
+
+        localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
 
         input.value = currentLevelData.answer;
 

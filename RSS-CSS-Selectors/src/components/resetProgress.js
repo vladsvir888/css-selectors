@@ -1,5 +1,6 @@
-import dataGame from '../dataGame';
+import { keyLocalStorage } from '../data';
 import loadLevel from './loadLevel';
+import setDataFromLocalStorage from './setDataFromLocalStorage';
 
 function resetProgress() {
     const resetButton = document.querySelector('.sidebar__reset');
@@ -7,12 +8,9 @@ function resetProgress() {
     if (!resetButton) return;
 
     resetButton.addEventListener('click', () => {
-        if (dataGame.currentLevel === 0) return;
+        localStorage.removeItem(keyLocalStorage);
 
-        dataGame.currentLevel = 0;
-
-        dataGame.historyAnswers = {};
-
+        setDataFromLocalStorage();
         loadLevel();
     });
 }

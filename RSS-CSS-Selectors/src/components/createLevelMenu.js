@@ -1,17 +1,16 @@
-import dataGame from '../dataGame';
+import { dataLevels, dataLocalStorage } from '../data';
 
 function createLevelMenu() {
     const levelsWrapper = document.querySelector('.sidebar__levels');
 
     if (!levelsWrapper) return;
 
-    const { levels, currentLevel } = dataGame;
     let result = '';
 
-    levels.forEach((_, index) => {
+    dataLevels.forEach((_, index) => {
         result += `
             <li class="sidebar__level">
-                <button class="btn sidebar__level-btn" ${index === currentLevel ? 'disabled' : ''}>
+                <button class="btn sidebar__level-btn" ${index === dataLocalStorage.currentLevel ? 'disabled' : ''}>
                     Level ${index + 1}
                 </button>
             </li>

@@ -1,9 +1,10 @@
-import dataGame from '../dataGame';
+import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
 import addAnimation from './addAnimation';
 import loadLevel from './loadLevel';
 
 function checkAnswer(node) {
-    const currentLevelData = dataGame.levels[dataGame.currentLevel];
+    const { currentLevel, completeLevels } = dataLocalStorage;
+    const currentLevelData = dataLevels[currentLevel];
     const table = document.querySelector('.table__wrap');
     const code = document.querySelector('.code-block');
     const correctAnswer = table.querySelectorAll(currentLevelData.answer);
@@ -23,12 +24,21 @@ function checkAnswer(node) {
     answerInput.forEach((item) => (answerInputString += item.outerHTML));
 
     if (correctAnswer.length === answerInput.length && correctAnswerString === answerInputString) {
-        dataGame.historyAnswers[dataGame.currentLevel] = {
-            ...dataGame.historyAnswers[dataGame.currentLevel],
-            isCorrect: true,
-        };
+        if (!completeLevels.includes(currentLevel)) {
+            completeLevels.push(currentLevel);
+        }
 
-        dataGame.currentLevel += 1;
+        document.querySelector('.sidebar__level-btn[disabled]').classList.add('success');
+
+        dataLocalStorage.currentLevel += 1;
+
+        if (dataLocalStorage.currentLevel >= dataLevels.length) {
+            dataLocalStorage.currentLevel -= 1;
+
+            alert('This was the last level of the game. Use the menu in the sidebar to go to another the level.');
+        }
+
+        localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
 
         node.value = '';
 
