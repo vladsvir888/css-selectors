@@ -547,6 +547,13 @@ i {
     }
 }
 
+@media (max-width: 767px) {
+    .table .table-hover::before,
+    .table .code-hover::before {
+        right: 0;
+    }
+}
+
 @media (max-width: 600px) {
     .code-block {
         grid-template-columns: 1fr;
