@@ -1,7 +1,12 @@
 import { dataLocalStorage, keyLocalStorage } from '../data';
+import { IDataLocalStorage } from '../types';
 
-function setDataFromLocalStorage() {
-    const data = JSON.parse(localStorage.getItem(keyLocalStorage));
+function setDataFromLocalStorage(): void {
+    const value = localStorage.getItem(keyLocalStorage);
+
+    if (!value) return;
+
+    const data: IDataLocalStorage = JSON.parse(value);
     const levelButtons = document.querySelectorAll('.sidebar__level-btn');
 
     dataLocalStorage.currentLevel = data?.currentLevel ?? 0;

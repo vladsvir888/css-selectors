@@ -1,6 +1,6 @@
 import { dataLevels, dataLocalStorage } from '../data';
 
-function loadLevel() {
+function loadLevel(): void {
     const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
     const descriptionLevelString = `
         <div class="sidebar__level-descr">
@@ -17,7 +17,19 @@ function loadLevel() {
     const descriptionLevel = document.querySelector('.sidebar__level-descr');
     const table = document.querySelector('.table__wrap');
     const code = document.querySelector('.code-block__area--html');
-    const input = document.querySelector('.code-block__input');
+    const input = <HTMLInputElement>document.querySelector('.code-block__input');
+
+    if (
+        !table ||
+        !code ||
+        !headingLevel ||
+        !currentAndTotalLevel ||
+        !activeLevelButton ||
+        !levelPreviousButton ||
+        !levelNextButton
+    ) {
+        return;
+    }
 
     input.value = '';
 
@@ -27,15 +39,15 @@ function loadLevel() {
     currentAndTotalLevel.textContent = `Level ${dataLocalStorage.currentLevel + 1} of ${dataLevels.length}`;
 
     activeLevelButton.removeAttribute('disabled');
-    levelButtons[dataLocalStorage.currentLevel].setAttribute('disabled', true);
+    levelButtons[dataLocalStorage.currentLevel].setAttribute('disabled', '');
     levelButtons[dataLocalStorage.currentLevel].insertAdjacentHTML('afterend', descriptionLevelString);
 
     if (dataLocalStorage.currentLevel === 0) {
-        levelPreviousButton.setAttribute('disabled', true);
+        levelPreviousButton.setAttribute('disabled', '');
         levelNextButton.removeAttribute('disabled');
     } else if (dataLocalStorage.currentLevel === dataLevels.length - 1) {
         levelPreviousButton.removeAttribute('disabled');
-        levelNextButton.setAttribute('disabled', true);
+        levelNextButton.setAttribute('disabled', '');
     } else if (dataLocalStorage.currentLevel !== 0 && dataLocalStorage.currentLevel !== dataLevels.length - 1) {
         levelPreviousButton.removeAttribute('disabled');
         levelNextButton.removeAttribute('disabled');

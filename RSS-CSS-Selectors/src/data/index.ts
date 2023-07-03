@@ -1,10 +1,12 @@
-export const dataLocalStorage = {
+import { IDataLocalStorage, IDataLevel } from '../types';
+
+export const dataLocalStorage: IDataLocalStorage = {
     currentLevel: 0,
     completeLevels: [],
     completeLevelsWithHelp: [],
 };
 
-export const dataLevels = [
+export const dataLevels: IDataLevel[] = [
     {
         title: 'Select squares',
         selectorName: 'X',

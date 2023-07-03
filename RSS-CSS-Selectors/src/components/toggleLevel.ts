@@ -1,9 +1,9 @@
 import { dataLocalStorage, keyLocalStorage } from '../data';
 import loadLevel from './loadLevel';
 
-function toggleLevel() {
+function toggleLevel(): void {
     document.addEventListener('click', (event) => {
-        const { target } = event;
+        const target = <HTMLElement>event.target;
 
         if (!target.classList.contains('sidebar__level-btn') && !target.classList.contains('sidebar__btn')) return;
 

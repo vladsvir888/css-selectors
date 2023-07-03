@@ -2,12 +2,10 @@ import { keyLocalStorage } from '../data';
 import loadLevel from './loadLevel';
 import setDataFromLocalStorage from './setDataFromLocalStorage';
 
-function resetProgress() {
+function resetProgress(): void {
     const resetButton = document.querySelector('.sidebar__reset');
 
-    if (!resetButton) return;
-
-    resetButton.addEventListener('click', () => {
+    resetButton?.addEventListener('click', () => {
         localStorage.removeItem(keyLocalStorage);
 
         setDataFromLocalStorage();

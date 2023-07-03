@@ -2,20 +2,23 @@ import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
 import addAnimation from './addAnimation';
 import loadLevel from './loadLevel';
 
-function checkAnswer(node) {
+function checkAnswer(node: HTMLInputElement): void {
     const { currentLevel, completeLevels } = dataLocalStorage;
     const currentLevelData = dataLevels[currentLevel];
     const table = document.querySelector('.table__wrap');
-    const code = document.querySelector('.code-block');
-    const correctAnswer = table.querySelectorAll(currentLevelData.answer);
+    const code: NodeListOf<HTMLElement> = document.querySelectorAll('.code-block');
     let correctAnswerString = '';
     let answerInputString = '';
     let answerInput;
 
+    if (!table || !code) return;
+
+    const correctAnswer: NodeListOf<HTMLElement> = table.querySelectorAll(currentLevelData.answer);
+
     try {
         answerInput = table.querySelectorAll(node.value);
     } catch (error) {
-        addAnimation([code], 'animate-shake');
+        addAnimation(code, 'animate-shake');
 
         return;
     }
@@ -28,7 +31,7 @@ function checkAnswer(node) {
             completeLevels.push(currentLevel);
         }
 
-        document.querySelector('.sidebar__level-btn[disabled]').classList.add('success');
+        document.querySelector('.sidebar__level-btn[disabled]')?.classList.add('success');
 
         dataLocalStorage.currentLevel += 1;
 
@@ -48,7 +51,7 @@ function checkAnswer(node) {
             loadLevel();
         }, 500);
     } else {
-        addAnimation([code], 'animate-shake');
+        addAnimation(code, 'animate-shake');
     }
 }
 

@@ -1,13 +1,13 @@
 import { dataLevels, dataLocalStorage } from '../data';
 
-function createLevelMenu() {
+function createLevelMenu(): void {
     const levelsWrapper = document.querySelector('.sidebar__levels');
 
     if (!levelsWrapper) return;
 
     let result = '';
 
-    dataLevels.forEach((_, index) => {
+    dataLevels.forEach((_, index: number) => {
         result += `
             <li class="sidebar__level">
                 <button class="btn sidebar__level-btn" ${index === dataLocalStorage.currentLevel ? 'disabled' : ''}>

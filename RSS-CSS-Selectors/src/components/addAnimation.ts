@@ -1,4 +1,4 @@
-function addAnimation(nodes, animateClass) {
+function addAnimation(nodes: NodeListOf<HTMLElement>, animateClass: string): void {
     nodes.forEach((node) => {
         node.classList.add(animateClass);
 
