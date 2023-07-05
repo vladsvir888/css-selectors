@@ -1,6 +1,7 @@
 import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
-import addAnimation from './addAnimation';
+import Animation from './animation';
 import loadLevel from './loadLevel';
+import { AnimationEnum } from '../types';
 
 function checkAnswer(node: HTMLInputElement): void {
     const { currentLevel, completeLevels } = dataLocalStorage;
@@ -9,7 +10,7 @@ function checkAnswer(node: HTMLInputElement): void {
     const code: NodeListOf<HTMLElement> = document.querySelectorAll('.code-block');
     let correctAnswerString = '';
     let answerInputString = '';
-    let answerInput;
+    let answerInput: NodeListOf<HTMLElement>;
 
     if (!table || !code) return;
 
@@ -18,7 +19,7 @@ function checkAnswer(node: HTMLInputElement): void {
     try {
         answerInput = table.querySelectorAll(node.value);
     } catch (error) {
-        addAnimation(code, 'animate-shake');
+        new Animation<NodeListOf<HTMLElement>>().add(code, AnimationEnum.Shake);
 
         return;
     }
@@ -45,13 +46,13 @@ function checkAnswer(node: HTMLInputElement): void {
 
         node.value = '';
 
-        addAnimation(correctAnswer, 'animate-fadeout');
+        new Animation<NodeListOf<HTMLElement>>().add(correctAnswer, AnimationEnum.FadeOut);
 
         setTimeout(() => {
             loadLevel();
         }, 500);
     } else {
-        addAnimation(code, 'animate-shake');
+        new Animation<NodeListOf<HTMLElement>>().add(code, AnimationEnum.Shake);
     }
 }
 

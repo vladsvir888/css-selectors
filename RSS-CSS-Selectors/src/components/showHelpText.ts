@@ -1,14 +1,12 @@
 import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
-import addAnimation from './addAnimation';
+import Animation from './animation';
+import { AnimationEnum } from '../types';
 
 function showHelpText(): void {
     const button = document.querySelector('.code-block__help-btn');
-
-    if (!button) return;
-
     const inputs: NodeListOf<HTMLElement> = document.querySelectorAll('.code-block__input');
 
-    button.addEventListener('click', () => {
+    button?.addEventListener('click', () => {
         const { currentLevel, completeLevelsWithHelp } = dataLocalStorage;
         const currentLevelData = dataLevels[currentLevel];
 
@@ -22,7 +20,7 @@ function showHelpText(): void {
 
         (<HTMLInputElement>inputs[0]).value = currentLevelData.answer;
 
-        addAnimation(inputs, 'typing-text');
+        new Animation<NodeListOf<HTMLElement>>().add(inputs, AnimationEnum.Typing);
     });
 }
 
