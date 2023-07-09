@@ -12,6 +12,19 @@ export interface IDataLevel {
     answer: string;
 }
 
+export interface ILoadLevelElements {
+    headingLevel: HTMLHeadingElement | null;
+    currentAndTotalLevel: HTMLElement | null;
+    levelButtons: NodeListOf<HTMLButtonElement>;
+    activeLevelButton: HTMLButtonElement | null;
+    levelPreviousButton: HTMLButtonElement | null;
+    levelNextButton: HTMLButtonElement | null;
+    descriptionLevel: HTMLElement | null;
+    table: HTMLElement | null;
+    code: HTMLElement | null;
+    input: HTMLInputElement | null;
+}
+
 export type AnimationClassesType = 'animate-shake' | 'animate-fadeout' | 'typing-text';
 
 export enum AnimationEnum {

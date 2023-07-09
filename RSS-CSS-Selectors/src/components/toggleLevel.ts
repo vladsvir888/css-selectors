@@ -5,7 +5,7 @@ function toggleLevel(): void {
     document.addEventListener('click', (event) => {
         const target = <HTMLElement>event.target;
 
-        if (!target.classList.contains('sidebar__level-btn') && !target.classList.contains('sidebar__btn')) return;
+        if (!target.matches('.sidebar__level-btn, .sidebar__btn')) return;
 
         if (target.classList.contains('sidebar__level-btn')) {
             const buttons = [...document.querySelectorAll('.sidebar__level-btn')];
@@ -15,11 +15,7 @@ function toggleLevel(): void {
         }
 
         if (target.classList.contains('sidebar__btn')) {
-            if (target.classList.contains('sidebar__btn--next')) {
-                dataLocalStorage.currentLevel += 1;
-            } else {
-                dataLocalStorage.currentLevel -= 1;
-            }
+            dataLocalStorage.currentLevel += target.classList.contains('sidebar__btn--next') ? 1 : -1;
         }
 
         localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));

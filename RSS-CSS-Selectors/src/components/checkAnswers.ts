@@ -3,9 +3,24 @@ import Animation from './animation';
 import loadLevel from './loadLevel';
 import { AnimationEnum } from '../types';
 
-function checkAnswer(node: HTMLInputElement): void {
+function updateData() {
     const { currentLevel, completeLevels } = dataLocalStorage;
-    const currentLevelData = dataLevels[currentLevel];
+
+    if (!completeLevels.includes(currentLevel)) completeLevels.push(currentLevel);
+
+    dataLocalStorage.currentLevel += 1;
+
+    if (dataLocalStorage.currentLevel >= dataLevels.length) {
+        dataLocalStorage.currentLevel -= 1;
+
+        alert('This was the last level of the game. Use the menu in the sidebar to go to another the level.');
+    }
+
+    localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
+}
+
+function checkAnswer(node: HTMLInputElement): void {
+    const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
     const table = document.querySelector('.table__wrap');
     const code: NodeListOf<HTMLElement> = document.querySelectorAll('.code-block');
     let correctAnswerString = '';
@@ -19,7 +34,7 @@ function checkAnswer(node: HTMLInputElement): void {
     try {
         answerInput = table.querySelectorAll(node.value);
     } catch (error) {
-        new Animation<NodeListOf<HTMLElement>>().add(code, AnimationEnum.Shake);
+        new Animation().add(code, AnimationEnum.Shake);
 
         return;
     }
@@ -28,31 +43,19 @@ function checkAnswer(node: HTMLInputElement): void {
     answerInput.forEach((item) => (answerInputString += item.outerHTML));
 
     if (correctAnswer.length === answerInput.length && correctAnswerString === answerInputString) {
-        if (!completeLevels.includes(currentLevel)) {
-            completeLevels.push(currentLevel);
-        }
+        updateData();
 
         document.querySelector('.sidebar__level-btn[disabled]')?.classList.add('success');
 
-        dataLocalStorage.currentLevel += 1;
-
-        if (dataLocalStorage.currentLevel >= dataLevels.length) {
-            dataLocalStorage.currentLevel -= 1;
-
-            alert('This was the last level of the game. Use the menu in the sidebar to go to another the level.');
-        }
-
-        localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
-
         node.value = '';
 
-        new Animation<NodeListOf<HTMLElement>>().add(correctAnswer, AnimationEnum.FadeOut);
+        new Animation().add(correctAnswer, AnimationEnum.FadeOut);
 
         setTimeout(() => {
             loadLevel();
         }, 500);
     } else {
-        new Animation<NodeListOf<HTMLElement>>().add(code, AnimationEnum.Shake);
+        new Animation().add(code, AnimationEnum.Shake);
     }
 }
 

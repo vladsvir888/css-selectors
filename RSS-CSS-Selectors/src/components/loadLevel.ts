@@ -1,23 +1,36 @@
 import { dataLevels, dataLocalStorage } from '../data';
+import { ILoadLevelElements } from '../types';
+
+function getElements(): ILoadLevelElements {
+    return {
+        headingLevel: document.querySelector('h1'),
+        currentAndTotalLevel: document.querySelector('.sidebar__text'),
+        levelButtons: document.querySelectorAll('.sidebar__level-btn'),
+        activeLevelButton: document.querySelector('.sidebar__level-btn[disabled]'),
+        levelPreviousButton: document.querySelector('.sidebar__btn--prev'),
+        levelNextButton: document.querySelector('.sidebar__btn--next'),
+        descriptionLevel: document.querySelector('.sidebar__level-descr'),
+        table: document.querySelector('.table__wrap'),
+        code: document.querySelector('.code-block__area--html'),
+        input: document.querySelector('.code-block__input'),
+    };
+}
 
 function loadLevel(): void {
     const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
-    const descriptionLevelString = `
-        <div class="sidebar__level-descr">
-            <p>${currentLevelData.selectorName}</p>
-            <p>${currentLevelData.selectorDescription}</p>
-        </div>
-    `;
-    const headingLevel = document.querySelector('h1');
-    const currentAndTotalLevel = document.querySelector('.sidebar__text');
-    const levelButtons = document.querySelectorAll('.sidebar__level-btn');
-    const activeLevelButton = document.querySelector('.sidebar__level-btn[disabled]');
-    const levelPreviousButton = document.querySelector('.sidebar__btn--prev');
-    const levelNextButton = document.querySelector('.sidebar__btn--next');
-    const descriptionLevel = document.querySelector('.sidebar__level-descr');
-    const table = document.querySelector('.table__wrap');
-    const code = document.querySelector('.code-block__area--html');
-    const input = <HTMLInputElement>document.querySelector('.code-block__input');
+
+    const {
+        headingLevel,
+        currentAndTotalLevel,
+        levelButtons,
+        activeLevelButton,
+        levelPreviousButton,
+        levelNextButton,
+        descriptionLevel,
+        table,
+        code,
+        input,
+    } = getElements();
 
     if (
         !table ||
@@ -31,8 +44,7 @@ function loadLevel(): void {
         return;
     }
 
-    input.value = '';
-
+    if (input) input.value = '';
     if (descriptionLevel) descriptionLevel.remove();
 
     headingLevel.textContent = currentLevelData.title;
@@ -40,18 +52,21 @@ function loadLevel(): void {
 
     activeLevelButton.removeAttribute('disabled');
     levelButtons[dataLocalStorage.currentLevel].setAttribute('disabled', '');
-    levelButtons[dataLocalStorage.currentLevel].insertAdjacentHTML('afterend', descriptionLevelString);
+    levelButtons[dataLocalStorage.currentLevel].insertAdjacentHTML(
+        'afterend',
+        `
+        <div class="sidebar__level-descr">
+            <p>${currentLevelData.selectorName}</p>
+            <p>${currentLevelData.selectorDescription}</p>
+        </div>
+        `
+    );
 
-    if (dataLocalStorage.currentLevel === 0) {
-        levelPreviousButton.setAttribute('disabled', '');
-        levelNextButton.removeAttribute('disabled');
-    } else if (dataLocalStorage.currentLevel === dataLevels.length - 1) {
-        levelPreviousButton.removeAttribute('disabled');
-        levelNextButton.setAttribute('disabled', '');
-    } else if (dataLocalStorage.currentLevel !== 0 && dataLocalStorage.currentLevel !== dataLevels.length - 1) {
-        levelPreviousButton.removeAttribute('disabled');
-        levelNextButton.removeAttribute('disabled');
-    }
+    levelPreviousButton.removeAttribute('disabled');
+    levelNextButton.removeAttribute('disabled');
+
+    if (dataLocalStorage.currentLevel === 0) levelPreviousButton.setAttribute('disabled', '');
+    if (dataLocalStorage.currentLevel === dataLevels.length - 1) levelNextButton.setAttribute('disabled', '');
 
     table.innerHTML = currentLevelData.markup;
     code.innerHTML = currentLevelData.markup;

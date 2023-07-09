@@ -8,18 +8,16 @@ function setDataFromLocalStorage(): void {
 
     const data: IDataLocalStorage = JSON.parse(value);
     const levelButtons = document.querySelectorAll('.sidebar__level-btn');
+    const { currentLevel, completeLevels, completeLevelsWithHelp } = data;
 
-    dataLocalStorage.currentLevel = data?.currentLevel ?? 0;
-    dataLocalStorage.completeLevels = data?.completeLevels ?? [];
-    dataLocalStorage.completeLevelsWithHelp = data?.completeLevelsWithHelp ?? [];
+    dataLocalStorage.currentLevel = currentLevel;
+    dataLocalStorage.completeLevels = completeLevels;
+    dataLocalStorage.completeLevelsWithHelp = completeLevelsWithHelp;
 
-    levelButtons.forEach((levelButton) => {
-        levelButton.classList.remove('success');
-        levelButton.classList.remove('with-help');
-    });
+    levelButtons.forEach((levelButton) => levelButton.classList.remove('success', 'with-help'));
 
-    data?.completeLevels.forEach((item) => levelButtons[item].classList.add('success'));
-    data?.completeLevelsWithHelp.forEach((item) => levelButtons[item].classList.add('with-help'));
+    completeLevels.forEach((item) => levelButtons[item].classList.add('success'));
+    completeLevelsWithHelp.forEach((item) => levelButtons[item].classList.add('with-help'));
 }
 
 export default setDataFromLocalStorage;

@@ -6,7 +6,10 @@ function resetProgress(): void {
     const resetButton = document.querySelector('.sidebar__reset');
 
     resetButton?.addEventListener('click', () => {
-        localStorage.removeItem(keyLocalStorage);
+        localStorage.setItem(
+            keyLocalStorage,
+            JSON.stringify({ currentLevel: 0, completeLevels: [], completeLevelsWithHelp: [] })
+        );
 
         setDataFromLocalStorage();
         loadLevel();
