@@ -22,7 +22,6 @@ export interface ILoadLevelElements {
     descriptionLevel: HTMLElement | null;
     table: HTMLElement | null;
     code: HTMLElement | null;
-    input: HTMLInputElement | null;
 }
 
 export type AnimationClassesType = 'animate-shake' | 'animate-fadeout' | 'typing-text';

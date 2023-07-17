@@ -2,6 +2,7 @@ import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
 import Animation from './animation';
 import loadLevel from './loadLevel';
 import { AnimationEnum } from '../types';
+import resetControls from './resetControls';
 
 function updateData() {
     const { currentLevel, completeLevels } = dataLocalStorage;
@@ -19,25 +20,24 @@ function updateData() {
     localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
 }
 
-function checkAnswer(node: HTMLInputElement): void {
-    const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
-    const table = document.querySelector('.table__wrap');
-    const code: NodeListOf<HTMLElement> = document.querySelectorAll('.code-block');
-    let correctAnswerString = '';
-    let answerInputString = '';
-    let answerInput: NodeListOf<HTMLElement>;
-
-    if (!table || !code) return;
-
-    const correctAnswer: NodeListOf<HTMLElement> = table.querySelectorAll(currentLevelData.answer);
+function catchInvalidSelector(node: HTMLInputElement, table: HTMLElement): NodeListOf<HTMLElement> | null {
+    const code = <NodeListOf<HTMLElement>>document.querySelectorAll('.code-block');
 
     try {
-        answerInput = table.querySelectorAll(node.value);
+        const answerInput = <NodeListOf<HTMLElement>>table.querySelectorAll(node.value);
+
+        return answerInput;
     } catch (error) {
         new Animation().add(code, AnimationEnum.Shake);
-
-        return;
     }
+
+    return null;
+}
+
+function compareAnswers(correctAnswer: NodeListOf<HTMLElement>, answerInput: NodeListOf<HTMLElement>): void {
+    const code = <NodeListOf<HTMLElement>>document.querySelectorAll('.code-block');
+    let correctAnswerString = '';
+    let answerInputString = '';
 
     correctAnswer.forEach((item) => (correctAnswerString += item.outerHTML));
     answerInput.forEach((item) => (answerInputString += item.outerHTML));
@@ -47,7 +47,7 @@ function checkAnswer(node: HTMLInputElement): void {
 
         document.querySelector('.sidebar__level-btn[disabled]')?.classList.add('success');
 
-        node.value = '';
+        resetControls();
 
         new Animation().add(correctAnswer, AnimationEnum.FadeOut);
 
@@ -57,6 +57,17 @@ function checkAnswer(node: HTMLInputElement): void {
     } else {
         new Animation().add(code, AnimationEnum.Shake);
     }
+}
+
+function checkAnswer(node: HTMLInputElement): void {
+    const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
+    const table = <HTMLElement>document.querySelector('.table__wrap');
+    const correctAnswer = <NodeListOf<HTMLElement>>table.querySelectorAll(currentLevelData.answer);
+    const answerInput = catchInvalidSelector(node, table);
+
+    if (!answerInput) return;
+
+    compareAnswers(correctAnswer, answerInput);
 }
 
 export default checkAnswer;

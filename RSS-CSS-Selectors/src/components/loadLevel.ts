@@ -1,5 +1,6 @@
 import { dataLevels, dataLocalStorage } from '../data';
 import { ILoadLevelElements } from '../types';
+import resetControls from './resetControls';
 
 function getElements(): ILoadLevelElements {
     return {
@@ -12,7 +13,6 @@ function getElements(): ILoadLevelElements {
         descriptionLevel: document.querySelector('.sidebar__level-descr'),
         table: document.querySelector('.table__wrap'),
         code: document.querySelector('.code-block__area--html'),
-        input: document.querySelector('.code-block__input'),
     };
 }
 
@@ -29,7 +29,6 @@ function loadLevel(): void {
         descriptionLevel,
         table,
         code,
-        input,
     } = getElements();
 
     if (
@@ -44,7 +43,8 @@ function loadLevel(): void {
         return;
     }
 
-    if (input) input.value = '';
+    resetControls();
+
     if (descriptionLevel) descriptionLevel.remove();
 
     headingLevel.textContent = currentLevelData.title;

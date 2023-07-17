@@ -15,7 +15,9 @@ function toggleLevel(): void {
         }
 
         if (target.classList.contains('sidebar__btn')) {
-            dataLocalStorage.currentLevel += target.classList.contains('sidebar__btn--next') ? 1 : -1;
+            const count = target.classList.contains('sidebar__btn--next') ? 1 : -1;
+
+            dataLocalStorage.currentLevel += count;
         }
 
         localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));

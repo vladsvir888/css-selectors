@@ -4,7 +4,7 @@ import { AnimationEnum } from '../types';
 
 function showHelpText(): void {
     const button = document.querySelector('.code-block__help-btn');
-    const inputs: NodeListOf<HTMLInputElement> = document.querySelectorAll('.code-block__input');
+    const inputs = <NodeListOf<HTMLInputElement>>document.querySelectorAll('.code-block__input');
 
     button?.addEventListener('click', () => {
         const { currentLevel, completeLevelsWithHelp } = dataLocalStorage;

@@ -1,13 +1,13 @@
 import { dataLevels, dataLocalStorage } from '../data';
 
 function mouseHoverHandling(): void {
-    const table = document.querySelector('.table__wrap');
-    const code = document.querySelector('.code-block__area--html');
+    const table = <HTMLElement>document.querySelector('.table__wrap');
+    const code = <HTMLElement>document.querySelector('.code-block__area--html');
 
     function handleTableMouseOver(event: Event): void {
         const target = <HTMLElement>event.target;
 
-        if (target === table || !table || !code) return;
+        if (target === table) return;
 
         target.dataset.title = target.outerHTML;
 
@@ -21,7 +21,7 @@ function mouseHoverHandling(): void {
     function handleCodeMouseOver(event: Event): void {
         const target = <HTMLElement>event.target;
 
-        if (target === code || !table || !code) return;
+        if (target === code) return;
 
         target.classList.add('code-hover');
 
@@ -37,7 +37,7 @@ function mouseHoverHandling(): void {
     function handleCodeAndTableMouseOut(): void {
         const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
 
-        if (!currentLevelData || !table || !code) return;
+        if (!currentLevelData) return;
 
         table.innerHTML = currentLevelData.markup;
         code.innerHTML = currentLevelData.markup;
