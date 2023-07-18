@@ -1,4 +1,5 @@
-import { dataLocalStorage, keyLocalStorage } from '../data';
+import { dataLocalStorage } from '../data';
+import { CacheKey, cacheUtil } from '../utils/localStorageUtility';
 import loadLevel from './loadLevel';
 
 function toggleLevel(): void {
@@ -20,7 +21,7 @@ function toggleLevel(): void {
             dataLocalStorage.currentLevel += count;
         }
 
-        localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
+        cacheUtil.set(CacheKey.LevelInfo, dataLocalStorage);
 
         loadLevel();
     });

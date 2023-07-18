@@ -1,4 +1,5 @@
-import { dataLocalStorage, keyLocalStorage } from '../data';
+import { dataLocalStorage } from '../data';
+import { CacheKey, cacheUtil } from '../utils/localStorageUtility';
 import loadLevel from './loadLevel';
 import setDataFromLocalStorage from './setDataFromLocalStorage';
 
@@ -10,7 +11,7 @@ function resetProgress(): void {
         dataLocalStorage.completeLevels = [];
         dataLocalStorage.completeLevelsWithHelp = [];
 
-        localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
+        cacheUtil.set(CacheKey.LevelInfo, dataLocalStorage);
 
         setDataFromLocalStorage();
         loadLevel();

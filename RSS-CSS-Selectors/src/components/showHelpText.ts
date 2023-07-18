@@ -1,6 +1,7 @@
-import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
+import { dataLevels, dataLocalStorage } from '../data';
 import Animation from './animation';
 import { AnimationEnum } from '../types';
+import { CacheKey, cacheUtil } from '../utils/localStorageUtility';
 
 function showHelpText(): void {
     const button = document.querySelector('.code-block__help-btn');
@@ -14,7 +15,7 @@ function showHelpText(): void {
 
         document.querySelector('.sidebar__level-btn[disabled]')?.classList.add('with-help');
 
-        localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
+        cacheUtil.set(CacheKey.LevelInfo, dataLocalStorage);
 
         inputs[0].value = currentLevelData.answer;
 

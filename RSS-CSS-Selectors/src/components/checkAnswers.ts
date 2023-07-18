@@ -1,8 +1,9 @@
-import { dataLevels, dataLocalStorage, keyLocalStorage } from '../data';
+import { dataLevels, dataLocalStorage } from '../data';
 import Animation from './animation';
 import loadLevel from './loadLevel';
 import { AnimationEnum } from '../types';
 import resetControls from './resetControls';
+import { CacheKey, cacheUtil } from '../utils/localStorageUtility';
 
 function updateData() {
     const { currentLevel, completeLevels } = dataLocalStorage;
@@ -17,7 +18,7 @@ function updateData() {
         alert('This was the last level of the game. Use the menu in the sidebar to go to another the level.');
     }
 
-    localStorage.setItem(keyLocalStorage, JSON.stringify(dataLocalStorage));
+    cacheUtil.set(CacheKey.LevelInfo, dataLocalStorage);
 }
 
 function catchInvalidSelector(node: HTMLInputElement, table: HTMLElement): NodeListOf<HTMLElement> | null {

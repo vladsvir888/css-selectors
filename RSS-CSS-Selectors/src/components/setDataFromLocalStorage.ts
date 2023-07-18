@@ -1,12 +1,12 @@
 import { dataLocalStorage, keyLocalStorage } from '../data';
-import { IDataLocalStorage } from '../types';
+import { CacheKey, cacheUtil } from '../utils/localStorageUtility';
 
 function setDataFromLocalStorage(): void {
     const value = localStorage.getItem(keyLocalStorage);
 
     if (!value) return;
 
-    const data: IDataLocalStorage = JSON.parse(value);
+    const data = cacheUtil.get(CacheKey.LevelInfo);
     const levelButtons = document.querySelectorAll('.sidebar__level-btn');
     const { currentLevel, completeLevels, completeLevelsWithHelp } = data;
 

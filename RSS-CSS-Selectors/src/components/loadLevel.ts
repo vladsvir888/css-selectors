@@ -1,57 +1,33 @@
 import { dataLevels, dataLocalStorage } from '../data';
-import { ILoadLevelElements } from '../types';
 import resetControls from './resetControls';
 
-function getElements(): ILoadLevelElements {
-    return {
-        headingLevel: document.querySelector('h1'),
-        currentAndTotalLevel: document.querySelector('.sidebar__text'),
-        levelButtons: document.querySelectorAll('.sidebar__level-btn'),
-        activeLevelButton: document.querySelector('.sidebar__level-btn[disabled]'),
-        levelPreviousButton: document.querySelector('.sidebar__btn--prev'),
-        levelNextButton: document.querySelector('.sidebar__btn--next'),
-        descriptionLevel: document.querySelector('.sidebar__level-descr'),
-        table: document.querySelector('.table__wrap'),
-        code: document.querySelector('.code-block__area--html'),
-    };
-}
-
-function loadLevel(): void {
-    const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
-
-    const {
-        headingLevel,
-        currentAndTotalLevel,
-        levelButtons,
-        activeLevelButton,
-        levelPreviousButton,
-        levelNextButton,
-        descriptionLevel,
-        table,
-        code,
-    } = getElements();
-
-    if (
-        !table ||
-        !code ||
-        !headingLevel ||
-        !currentAndTotalLevel ||
-        !activeLevelButton ||
-        !levelPreviousButton ||
-        !levelNextButton
-    ) {
-        return;
-    }
-
-    resetControls();
-
-    if (descriptionLevel) descriptionLevel.remove();
-
-    headingLevel.textContent = currentLevelData.title;
-    currentAndTotalLevel.textContent = `Level ${dataLocalStorage.currentLevel + 1} of ${dataLevels.length}`;
+function changeDisabledAttributeOnLevelButtons(): void {
+    const activeLevelButton = <HTMLButtonElement>document.querySelector('.sidebar__level-btn[disabled]');
+    const levelButtons = <NodeListOf<HTMLButtonElement>>document.querySelectorAll('.sidebar__level-btn');
+    const levelPreviousButton = <HTMLElement>document.querySelector('.sidebar__btn--prev');
+    const levelNextButton = <HTMLElement>document.querySelector('.sidebar__btn--next');
 
     activeLevelButton.removeAttribute('disabled');
     levelButtons[dataLocalStorage.currentLevel].setAttribute('disabled', '');
+
+    levelPreviousButton.removeAttribute('disabled');
+    levelNextButton.removeAttribute('disabled');
+
+    if (dataLocalStorage.currentLevel === 0) levelPreviousButton.setAttribute('disabled', '');
+    if (dataLocalStorage.currentLevel === dataLevels.length - 1) levelNextButton.setAttribute('disabled', '');
+}
+
+function updateLevelMarkup(): void {
+    const currentLevelData = dataLevels[dataLocalStorage.currentLevel];
+    const headingLevel = <HTMLHeadingElement>document.querySelector('h1');
+    const currentAndTotalLevelText = <HTMLElement>document.querySelector('.sidebar__text');
+    const levelButtons = <NodeListOf<HTMLButtonElement>>document.querySelectorAll('.sidebar__level-btn');
+    const table = <HTMLElement>document.querySelector('.table__wrap');
+    const code = <HTMLElement>document.querySelector('.code-block__area--html');
+
+    headingLevel.textContent = currentLevelData.title;
+    currentAndTotalLevelText.textContent = `Level ${dataLocalStorage.currentLevel + 1} of ${dataLevels.length}`;
+
     levelButtons[dataLocalStorage.currentLevel].insertAdjacentHTML(
         'afterend',
         `
@@ -62,14 +38,19 @@ function loadLevel(): void {
         `
     );
 
-    levelPreviousButton.removeAttribute('disabled');
-    levelNextButton.removeAttribute('disabled');
-
-    if (dataLocalStorage.currentLevel === 0) levelPreviousButton.setAttribute('disabled', '');
-    if (dataLocalStorage.currentLevel === dataLevels.length - 1) levelNextButton.setAttribute('disabled', '');
-
     table.innerHTML = currentLevelData.markup;
     code.innerHTML = currentLevelData.markup;
+}
+
+function loadLevel(): void {
+    const descriptionLevel = document.querySelector('.sidebar__level-descr');
+
+    resetControls();
+
+    if (descriptionLevel) descriptionLevel.remove();
+
+    changeDisabledAttributeOnLevelButtons();
+    updateLevelMarkup();
 }
 
 export default loadLevel;
